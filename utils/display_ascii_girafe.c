@@ -1,0 +1,21 @@
+#include "utils.h"
+
+void	sophie_la_girafe(int length)
+{
+	if (length < 0)
+		length *= -1;
+	ft_putendl("       /\\/\\");
+ 	ft_putendl("     _/   #\\_");
+ 	ft_putendl("    |__    __|");
+ 	ft_putendl("       @ @;");
+ 	ft_putendl("      /oo #)");
+ 	ft_putendl("      \\___/|");
+	while (length--)
+		ft_putendl("       	| #|");
+	ft_putendl("       /   #\\");
+	ft_putendl("      (# ^^ #)");
+	ft_putendl("      /#| | |\\");
+	ft_putendl("     / #| | |#\\");
+	ft_putendl("    (_) (_|_)(_)");
+	return ;
+}
