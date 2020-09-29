@@ -36,6 +36,8 @@ echo "\\" --> \
 echo "\" --> error
 echo "\\\" --> error
 
+echo $$ --> 'donne le pid du shell'
+
 -------------cd:
 
 cd  --> go to 'user root'

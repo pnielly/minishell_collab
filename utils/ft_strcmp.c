@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 15:56:25 by jaleman           #+#    #+#             */
-/*   Updated: 2017/02/27 15:56:27 by jaleman          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "utils.h"
 
 int		ft_strcmp(const char *s1, const char *s2)
@@ -17,8 +5,6 @@ int		ft_strcmp(const char *s1, const char *s2)
 	int i;
 	int diff;
 
-	if (!s1 || !s2)
-		return (-1);
 	i = 0;
 	diff = 0;
 	while (s2[i] != '\0' || s1[i] != '\0')
