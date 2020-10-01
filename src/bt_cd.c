@@ -22,7 +22,7 @@ void	ft_update_oldpwd(char **env)
 	ft_bzero(od, PATH_MAX);
 	ft_strcat(od, "export OLDPWD=");
 	ft_strcat(od, ft_search_var("PWD", env));
-	oldpwd = ft_split(od, SPACE);
+	oldpwd = ft_split_inc(od, SPACE);
 	bt_export(oldpwd, env);
 	ft_tabfree(oldpwd);
 	return ;

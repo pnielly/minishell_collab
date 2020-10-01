@@ -21,45 +21,24 @@ int	ft_pgrm(char *exe, char **args, char **env)
 }
 
 /*
- ** Checking absence of single quotation mark (either " or ')
+ ** Checking absence of lonely quotation mark (either ' (->sq) or " (-> dq))
  */
 
-int	check_syntax(char *s)
+int	check_syntax(char *s, int sq, int dq, int i)
 {
-	int	i;
-	int	sl;
-	int	dl;
-
-	i = 0;
-	sl = 0;
-	dl = 0;
-	while (s[i])
-	{
-		while (s[i] != '\'' && s[i] != '\"' && s[i])
-			i++;
-		if (s[i] == '\'')
-		{
-			sl = 1;
-			while (s[i] != '\'' && s[i])
-				i++;
-			if (s[i] == '\'')
-				sl = 0;
-		}
-		if (s[i] == '\"')
-		{
-			dl = 1;
-			while (s[i] != '\"' && s[i])
-				i++;
-			if (s[i] == '\"')
-				dl = 0;
-		}
+	while (!(s[i] == '\'' && !dq) && !(s[i] == '\"' && !sq) && s[i])
 		i++;
-	}
-	return (dl + sl);
+	if (s[i] == '\'' && !dq)
+		sq = 1 - sq;
+	if (s[i] == '\"' && !sq)
+		dq = 1 - dq;
+	if (s[i])
+		return (check_syntax(s + i, sq, dq, 1));
+	return (sq + dq);
 }
 
 /*
- ** Analyse cmds : 1. builtin? 2. executable? 3. other?
+ ** Analysis of cmds : 1. builtin? 2. executable? 3. other?
  */
 
 char	**ft_run(char *cmd, char **env)
@@ -70,11 +49,11 @@ char	**ft_run(char *cmd, char **env)
 
 	if (!cmd)
 		return (env);
-	args = ft_split(cmd, SPACE);
-//	check_syntax(cmd) ? printf("%s\n", strerror(WRONG_ARG)) | return (env) : 0;
-	if (check_syntax(cmd))
+	args = ft_split_inc(cmd, SPACE);
+	i = -1;
+	if (check_syntax(cmd, 0, 0, 0))
 	{
-		printf("%s\n", strerror(WRONG_ARG));
+		ft_putstr(strerror(WRONG_ARG));
 		return (env);
 	}
 	free(cmd);
@@ -93,6 +72,8 @@ char	**ft_run(char *cmd, char **env)
 
 /*
  ** Malloc and copy my own env
+ ** Note : the function used is ft_envadd that copies the env and adds an element 
+ ** (hence expt == NULL here)
  */
 
 
@@ -116,13 +97,13 @@ char	**ft_envadd(char **envp, char *expt)
 }
 
 /*
- ** Read and tokenize cmd line
+ ** Read and tokenize cmd line based on ";"
  */
 
 int	main(int ac, char **av, char **envp)
 {
 	int	status;
-	char	**cmds;
+	char	**cmd;
 	char	*line;
 	int	j;
 	char	**env;
@@ -137,12 +118,12 @@ int	main(int ac, char **av, char **envp)
 		ft_putstr("> ");
 		line = NULL;
 		get_next_line(0, &line);
-		cmds = ft_strtok(line, ";");
+		cmd = ft_split_exc(line, ";");
 		j = 0;
-		while (cmds[j])
-			env = ft_run(cmds[j++], env);
+		while (cmd[j])
+			env = ft_run(cmd[j++], env);
 		status = env ? 1 : 0;
-		free(cmds);
+		free(cmd);
 		free(line);
 	}
 	return (0);
