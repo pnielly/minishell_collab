@@ -14,13 +14,14 @@
 ** Get next line macros
 */
 
-# define BUFF_SIZE 32
+# define BUFF_SIZE 2047
 # define SPACE " \f\t\n\r\v"
 
 /*
 ** Function prototypes.
 */
 
+char	*ft_strpbrk(const char *s, const char *accept);
 char	**ft_split_exc(char *s, char *sep);
 char	**ft_split_inc(char *s, char *sep);
 char	*ft_strtrim(char *s, char *sep);
